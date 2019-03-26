@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.SnakeController;
+import model.Score;
 import model.Snake;
 import model.User;
 
@@ -11,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class LoginPanel extends JPanel {
@@ -23,7 +25,8 @@ public class LoginPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public LoginPanel() {
-		this.validateUser = new User("isain", "1234");
+		
+		this.validateUser = new User();
 		setLayout(null);
 		
 		user = new JTextField();
@@ -60,22 +63,34 @@ public class LoginPanel extends JPanel {
 	}
 	
 	public void openUserOptions(JButton btnNewButton) {
+				
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(validateUser.getName().equalsIgnoreCase(user.getText().toString()) && validateUser.getPass().equalsIgnoreCase(pass.getText().toString())) {
+				
+				if(SnakeController.getInstance().getXmlController().checkLogin(user.getText().toString(), pass.getText().toString())) {
 					
-					System.out.println("cambia");
-					
-					
-					JPanel menuPanel = new MenuPanel();
-					SnakeController.getInstance().getFrame().getMainPanel().changeRightPanel(menuPanel);
-					
-				} else {
-					JOptionPane.showMessageDialog(null, " Usuario o contraseña incorrecta");
+					welcome();
 
+				} else {
+					
+					if(SnakeController.getInstance().getXmlController().duplicateName(user.getText().toString(), pass.getText().toString())) {
+						SnakeController.getInstance().getFrame().getMainPanel().getLeftPanel().writeInConsole("Usuario o contraseña incorrecto");
+					} else {
+						welcome();
+					}
+					
 				}
 			}
 		});
+	}
+	
+	public void welcome() {
+		SnakeController.getInstance().setUserLogged(SnakeController.getInstance().getXmlController().checkUser(user.getText().toString()));
+		
+		SnakeController.getInstance().getFrame().getMainPanel().getLeftPanel().writeInConsole("Login correcto");
+		SnakeController.getInstance().getFrame().getMainPanel().getLeftPanel().writeInConsole("hola " + SnakeController.getInstance().getUserLogged().getName());
+		JPanel menuPanel = new MenuPanel();
+		SnakeController.getInstance().getFrame().getMainPanel().changeRightPanel(menuPanel);
 	}
 	
 	

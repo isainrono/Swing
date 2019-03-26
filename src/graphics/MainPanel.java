@@ -14,7 +14,7 @@ public class MainPanel extends JPanel {
 	 * Create the panel.
 	 */
 	
-	private JPanel leftPanel;
+	private LeftPanel leftPanel;
 	private JPanel rightPanel;
 	private JSplitPane splitPane;
 	
@@ -31,9 +31,8 @@ public class MainPanel extends JPanel {
 		splitPane.setEnabled(false);
 		
 		
-		
 		leftPanel = new LeftPanel();
-		splitPane.setLeftComponent(this.leftPanel);
+		splitPane.setLeftComponent(leftPanel);
 		
 		
 		rightPanel = new LoginPanel();
@@ -43,12 +42,12 @@ public class MainPanel extends JPanel {
 	}
 
 
-	public JPanel getLeftPanel() {
+	public LeftPanel getLeftPanel() {
 		return leftPanel;
 	}
 
 
-	public void setLeftPanel(JPanel leftPanel) {
+	public void setLeftPanel(LeftPanel leftPanel) {
 		this.leftPanel = leftPanel;
 	}
 
@@ -89,6 +88,7 @@ public class MainPanel extends JPanel {
 		this.splitPane.revalidate();
 	}
 	
+
 	
 	
 	

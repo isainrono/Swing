@@ -5,6 +5,7 @@ import java.awt.Color;
 import model.*;
 
 public class RightPanel extends JPanel {
+	
 
 	/**
 	 * Create the panel.
@@ -15,5 +16,7 @@ public class RightPanel extends JPanel {
 		
 		Snake snake = new Snake();
 	}
+	
+	
 
 }

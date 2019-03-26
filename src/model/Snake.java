@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import controller.SnakeController;
+
 public class Snake extends JPanel implements ActionListener {
 
     private final int B_WIDTH = 525;
@@ -30,6 +32,7 @@ public class Snake extends JPanel implements ActionListener {
     private int dots;
     private int apple_x;
     private int apple_y;
+    private int score;
 
     private boolean leftDirection = false;
     private boolean rightDirection = true;
@@ -71,7 +74,8 @@ public class Snake extends JPanel implements ActionListener {
     }
 
     private void initGame() {
-
+    	
+    	score = 0000000;
         dots = 3;
 
         for (int z = 0; z < dots; z++) {
@@ -99,6 +103,8 @@ public class Snake extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
         
         if (inGame) {
+        	
+        	score(g);
 
             g.drawImage(apple, apple_x, apple_y, this);
 
@@ -113,7 +119,8 @@ public class Snake extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-
+        	SnakeController.getInstance().getFrame().getMainPanel().getLeftPanel().writeInConsole("Total Score " + String.valueOf(score));
+        	SnakeController.getInstance().saveScore(score);
             gameOver(g);
         }        
     }
@@ -128,11 +135,21 @@ public class Snake extends JPanel implements ActionListener {
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
     }
+    
+    public void score(Graphics s) {
+    	String tScore = String.valueOf(score);
+    	Font small = new Font("Helvetica", Font.BOLD, 20);
+    	FontMetrics metr = getFontMetrics(small);
+    	
+    	s.setColor(Color.red);
+    	s.setFont(small);
+    	s.drawString(tScore, (B_WIDTH - metr.stringWidth(tScore)) / 8, B_HEIGHT / 12);
+    } 
 
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
-
+    		score = score + 10;
             dots++;
             locateApple();
         }
