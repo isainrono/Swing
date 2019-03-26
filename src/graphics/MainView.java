@@ -26,10 +26,12 @@ public class MainView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
+		setResizable(false);
 		setContentPane(contentPane);
 		
 		mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
+		
 		contentPane.add(mainPanel);	
 		
 	}
